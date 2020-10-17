@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS message(
+    id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	content TEXT NOT NULL,
+	username TEXT NOT NULL,
+	uuid TEXT NOT NULL,
+	server TEXT NOT NULL,
+	room TEXT NOT NULL,
+	timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	ok BIT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS event(
+    id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    type VARCHAR(5) NOT NULL,
+    uuid TEXT NOT NULL,
+    username TEXT NOT NULL,
+    server TEXT NOT NULL,
+    room TEXT NOT NULL,
+    timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+insertMessage:
+INSERT INTO message(username, uuid, content, server, room, ok)
+VALUES (?,?,?,?,?,?);
+
+insertEvent:
+INSERT INTO event(type, uuid, username, server, room)
+VALUES (?,?,?,?,?);
+
+selectAllMessages:
+SELECT * FROM message;
+
+selectAllEvents:
+SELECT * FROM event;
+
+selectJoinEvents:
+SELECT * FROM event WHERE type='join';
+
+selectLeaveEvents:
+SELECT * FROM event WHERE type='leave';
